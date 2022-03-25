@@ -1,15 +1,15 @@
 """Vest Virtual Trading"""
 from fastapi import FastAPI
 
-from services import NASDAQClient
+from routers import stocks
 
-app = FastAPI()
+app = FastAPI(
+    title="Vest Virtual Trading",
+)
 
-nasdaq = NASDAQClient()
+app.include_router(stocks.router)
 
-
-@app.get("/")
-async def root():
-    stock_response = nasdaq.get_stock("AAPL")
-
-    return {"stock": stock_response}
+@app.get("/status")
+async def status_check():
+    """Check the status of the API."""
+    return {"status": "OK"}
