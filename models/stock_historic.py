@@ -13,7 +13,7 @@ class StockHistory(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     currency = Column(String, index=True)
-    date = Column(DateTime(timezone=True), server_default=func.now())
+    datetime = Column(DateTime(timezone=True), server_default=func.now())
     price = Column(Float, index=True)
 
     stock_id = Column(Integer, ForeignKey("stock.id"))

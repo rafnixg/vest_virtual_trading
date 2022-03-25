@@ -1,7 +1,10 @@
 """Router Stock for the API."""
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from schemas.stock_schema import StockTransactionSchemaInput, StockTransactionSchemaResponse
 from services import NASDAQClient
+from db import get_db
 
 
 router = APIRouter(
@@ -12,11 +15,14 @@ router = APIRouter(
 nasdaq = NASDAQClient()
 
 
-@router.get("/trade")
-async def stock_trade():
-    response = nasdaq.get_stock('AAPL')
+@router.post("/trade")
+async def stock_trade(
+    stock_transaction: StockTransactionSchemaInput,
+    db: Session = Depends(get_db)
+):
+    response = nasdaq.get_stock(stock_transaction.symbol)
     data = response["data"]
-    
+
     return {"trade": data}
 
 

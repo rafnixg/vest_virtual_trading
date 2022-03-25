@@ -22,7 +22,7 @@ class StockTransaction(Base):
     __tablename__ = "stock_transaction"
 
     id = Column(Integer, primary_key=True, index=True)
-    qty = Column(Integer, index=True)
+    quantity = Column(Integer, index=True)
     symbol = Column(String, index=True)
     price = Column(Float, index=True)
     transaction_type = Column(Enum(TransactionType))
