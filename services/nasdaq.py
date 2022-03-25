@@ -1,5 +1,6 @@
 """NASDAQ API Client Wrapper."""
 import requests
+from fastapi import HTTPException
 
 
 class NASDAQClient:
@@ -16,11 +17,17 @@ class NASDAQClient:
             )
         }
 
-    def get_stock(self, symbol):
+    def get_stock(self, symbol: str):
         """Get the stock information from NASDAQ API
         Args:
             symbol (str): The stock symbol.
         """
         resource_url = f"{self.api_url}/quote/{symbol}/info?assetclass=stocks"
         response = requests.get(resource_url, headers=self.headers)
-        return response.json()
+        res_json = response.json()
+        if res_json["status"]["rCode"] != 200:
+            raise HTTPException(
+                status_code=res_json["status"]["rCode"],
+                detail=res_json["status"]["bCodeMessage"][0]["errorMessage"],
+            )
+        return res_json
