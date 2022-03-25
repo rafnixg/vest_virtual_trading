@@ -31,6 +31,6 @@ async def stock_hold():
     return {"hold": "AAPL"}
 
 
-@router.get("/history")
+@router.get("/historic")
 async def stock_history():
     return {"history": "AAPL"}
