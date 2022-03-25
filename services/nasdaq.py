@@ -21,13 +21,17 @@ class NASDAQClient:
         """Get the stock information from NASDAQ API
         Args:
             symbol (str): The stock symbol.
+        Returns:
+            dict: The stock information.
+        Raises:
+            HTTPException: If the stock symbol is not found.
         """
         resource_url = f"{self.api_url}/quote/{symbol}/info?assetclass=stocks"
-        response = requests.get(resource_url, headers=self.headers)
-        res_json = response.json()
-        if res_json["status"]["rCode"] != 200:
+        response = requests.get(resource_url, headers=self.headers).json()
+
+        if response["status"]["rCode"] != 200:
             raise HTTPException(
-                status_code=res_json["status"]["rCode"],
-                detail=res_json["status"]["bCodeMessage"][0]["errorMessage"],
+                status_code=response["status"]["rCode"],
+                detail=response["status"]["bCodeMessage"][0]["errorMessage"],
             )
-        return res_json
+        return response
