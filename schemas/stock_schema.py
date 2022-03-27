@@ -4,6 +4,19 @@ from pydantic import BaseModel
 from .enums import TransactionType
 
 
+class StockSchemaBase(BaseModel):
+    """Stock Schema Base."""
+
+    symbol: str
+    name: str
+
+
+class StockSchemaInput(StockSchemaBase):
+    """Stock Schema Input."""
+
+    pass
+
+
 class StockTransactionSchemaBase(BaseModel):
     """Base schema for a transaction."""
 
