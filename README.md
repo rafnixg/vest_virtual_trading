@@ -4,14 +4,14 @@ Web service (API) that simulates a test environment for trade stocks where a use
 
 ## Tech Stack
 
-- Language: Python 3.9
+- Language: Python > 3.9.0
 - Framework: FastAPI
-- Database: SQLite3
+- Database: SQLite3, SQLAlchemy (ORM)
 
 ## Endpoints
 - POST - /stock/trade
-- /stock/hold
-- /stock/historic
+- GET - /stock/hold
+- GET - /stock/historic
 
 ## Installation
 
@@ -35,6 +35,8 @@ Running with uvicorm server production
 $ source venv/bin/activate
 (venv) $ uvicorn main:app
 ```
+Show API Docs
+[http://localhost:8000/docs](http://localhost:8000/docs)
 
 ## Testing
 - TODO
