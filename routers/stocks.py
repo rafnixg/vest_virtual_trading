@@ -21,8 +21,6 @@ router = APIRouter(prefix="/stock", tags=["Stock"])
 
 nasdaq = NASDAQClient()
 
-#  TODO: Add response_model
-
 
 @router.post("/trade", response_model=StockTransactionSchemaResponse)
 async def stock_trade(

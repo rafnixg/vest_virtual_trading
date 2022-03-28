@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from db import Base, get_db
 from main import app
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./test.sqlite"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
@@ -27,23 +27,24 @@ def override_get_db():
         db.close()
 
 
-
-
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def testing_db():
     """Create a testing database."""
     Base.metadata.create_all(bind=engine)
     yield
     Base.metadata.drop_all(bind=engine)
 
-@pytest.fixture(scope='function')
+
+@pytest.fixture(scope="function")
 def client(testing_db):
     """Create a testing client."""
     app.dependency_overrides[get_db] = override_get_db
     yield TestClient(app)
 
+
 @pytest.fixture(scope="function")
 def db_session(testing_db):
+    """Create a testing session."""
     connection = engine.connect()
     transaction = connection.begin()
     session = TestingSessionLocal(bind=connection)

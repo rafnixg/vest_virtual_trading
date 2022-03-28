@@ -2,6 +2,8 @@
 from repositories.stock_historic_repository import StockHistoricRepository
 from repositories.stock_repository import StockRepository
 from schemas.stock_schema import StockHistoricSchemaInput
+
+
 def test_status(client):
     """Test the status of the API."""
     response = client.get("/status")
@@ -76,11 +78,13 @@ def test_stock_hold_without_stock(client):
     assert response.status_code == 422
     assert response.json()["detail"] == "You don't have any stock to hold"
 
+
 def test_stock_historic_without_records(client):
     """Test the stock historic route [GET] without data."""
 
     response = client.get("/stock/historic/AAPL")
     assert response.status_code == 404
+
 
 def test_stock_historic_with_records(client, db_session):
     """Test the stock historic route [GET] with data."""
