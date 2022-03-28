@@ -57,6 +57,7 @@ Need to be installed Docker and Docker-compose for run
 $ docker-compose build  # Build docker image
 $ docker-compose up     # Run docker container
 ```
+Show API Docs http://localhost:8000/docs
 
 For run docker container in background
 ```bash
