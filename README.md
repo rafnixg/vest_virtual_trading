@@ -1,6 +1,7 @@
 # Vest Virtual Trading
 
 Web service (API) that simulates a test environment for trade stocks where a user can buy/sell stocks, hold stocks and track portfolio performance.
+![Vest Virtual Trading](https://raw.githubusercontent.com/rafnixg/vest_virtual_trading/main/repo-image.jpg)
 
 ## Project Structure
 ```
