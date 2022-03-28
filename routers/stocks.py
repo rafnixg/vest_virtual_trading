@@ -1,5 +1,5 @@
 """Router Stock for the API."""
-
+from typing import List
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
 
@@ -68,7 +68,7 @@ async def stock_trade(
     }
 
 
-@router.get("/hold", response_model=list[StockHolderSchemaResponse])
+@router.get("/hold", response_model=List[StockHolderSchemaResponse])
 async def stock_hold(db: str = Depends(get_db)):
     """Get the stocks that the user is holding [GET]
     Args:
@@ -101,7 +101,7 @@ async def stock_hold(db: str = Depends(get_db)):
     return stocks_info
 
 
-@router.get("/historic/{symbol}", response_model=list[StockHistoricSchemaResponse])
+@router.get("/historic/{symbol}", response_model=List[StockHistoricSchemaResponse])
 async def stock_historic(symbol: str, db: str = Depends(get_db)):
     """Get the historic of a stock [GET]
     Args:
