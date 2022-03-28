@@ -113,4 +113,4 @@ $ docker-compose stop     # Stop docker container
 ```
 
 ## Developer Info
-- Rafnix Gabriel Guzmán Garcia, @rafnixg <rafnixg[at]gmail[dot]com>
+- Rafnix Gabriel Guzmán Garcia, @rafnixg - rafnixg[at]gmail[dot]com
