@@ -1,7 +1,7 @@
 """Stock transaction repository."""
 from sqlalchemy.orm import Session
 from sqlalchemy import case, func
-from models.stock import Stock, StockTransaction
+from models.stock import StockTransaction
 from schemas.enums import TransactionType
 from schemas.stock_schema import StockTransactionSchemaInput
 
@@ -15,6 +15,18 @@ case_quantity_for_type_action = case(
         (
             StockTransaction.transaction_type == TransactionType.BUY,
             StockTransaction.quantity,
+        ),
+    ]
+)
+case_value_for_type_action = case(
+    [
+        (
+            StockTransaction.transaction_type == TransactionType.SELL,
+            StockTransaction.price * StockTransaction.quantity * -1,
+        ),
+        (
+            StockTransaction.transaction_type == TransactionType.BUY,
+            StockTransaction.price * StockTransaction.quantity,
         ),
     ]
 )
@@ -75,3 +87,26 @@ class StockTransactionRepository:
         if transaction.quantity >= total_share_stock:
             return False
         return True
+
+    def get_total_value_shares_stock(self, stock_id: int):
+        """Get value of shares of a stock.
+        Args:
+            stock_id: The id of the stock.
+        """
+        return (
+            self.session.query(func.sum(case_value_for_type_action))
+            .filter(StockTransaction.stock_id == stock_id)
+            .scalar()
+        )
+
+
+    def get_profit_loss(self, stock_id: int):
+        """Get profit/loss of a stock.
+        Args:
+            stock_id: The id of the stock.
+        """
+        return (
+            self.session.query(func.sum(case_quantity_for_type_action))
+            .filter(StockTransaction.stock_id == stock_id)
+            .scalar()
+        )

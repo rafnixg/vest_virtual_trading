@@ -39,3 +39,15 @@ class StockTransactionSchemaResponse(StockTransactionSchemaBase):
 
 class StockTransactionSchemaInput(StockTransactionSchemaBase):
     """Schema for a transaction input."""
+
+
+class StockHistoricSchemaBase(BaseModel):
+    """Base schema for a historic."""
+
+    symbol: str
+    price: float
+
+class StockHistoricSchemaInput(StockHistoricSchemaBase):
+    """Schema for a historic input."""
+
+    pass
