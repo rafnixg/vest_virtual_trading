@@ -4,12 +4,11 @@ from db import get_db
 from fastapi import APIRouter, Depends, HTTPException
 from repositories.stock_historic_repository import StockHistoricRepository
 from repositories.stock_repository import StockRepository
-from repositories.stock_transaction_repository import StockTransactionRepository
-from schemas.stock_schema import (
-    StockSchemaInput,
-    StockTransactionSchemaInput,
-    StockTransactionSchemaResponse,
-)
+from repositories.stock_transaction_repository import \
+    StockTransactionRepository
+from schemas.stock_schema import (StockSchemaInput,
+                                  StockTransactionSchemaInput,
+                                  StockTransactionSchemaResponse)
 from services import NASDAQClient
 from sqlalchemy.orm import Session
 from utils import extrac_price
@@ -66,13 +65,13 @@ async def stock_hold(db: str = Depends(get_db)):
             "symbol": stock.symbol,
             "name": stock.name,
             "held_shares": transaction_repository.get_total_shares_stock(stock.id),
-            "value_shares": transaction_repository.get_total_value_shares_stock(stock.id),
-            "profit/loss": transaction_repository.get_profit_loss(stock.id),
-            "current_price_reference": current_price,
-
+            "value_shares": f"${transaction_repository.get_total_value_shares_stock(stock.id)}",
+            "profit/loss": f"{transaction_repository.get_profit_loss(stock.id, current_price):.2f}%",
+            "current_price_reference": stock_historic_repository.get_reference_prices_today(
+                stock.id
+            ),
         }
         stocks_info.append(stock_info)
-
 
     return {"stocks": stocks_info}
 

@@ -1,9 +1,9 @@
 """Stock transaction repository."""
-from sqlalchemy.orm import Session
-from sqlalchemy import case, func
 from models.stock import StockTransaction
 from schemas.enums import TransactionType
 from schemas.stock_schema import StockTransactionSchemaInput
+from sqlalchemy import case, func
+from sqlalchemy.orm import Session
 
 # CASE For Stock Transaction type multiplier factor
 case_quantity_for_type_action = case(
@@ -82,7 +82,7 @@ class StockTransactionRepository:
         Args:
             transaction: The transaction to validate.
         """
-        total_share_stock = self.get_total_shares_stock(stock_id)
+        total_share_stock = self.get_total_shares_stock(stock_id) or 0
 
         if transaction.quantity >= total_share_stock:
             return False
@@ -99,14 +99,17 @@ class StockTransactionRepository:
             .scalar()
         )
 
-
-    def get_profit_loss(self, stock_id: int):
+    def get_profit_loss(self, stock_id: int, current_price):
         """Get profit/loss of a stock.
         Args:
             stock_id: The id of the stock.
         """
+        total_value_shares_stock = self.get_total_value_shares_stock(stock_id) or 0
+        total_share_stock = self.get_total_shares_stock(stock_id) or 0
+        total_value_shares_stock_now = current_price * total_share_stock
+        profit_loss = total_value_shares_stock_now - total_value_shares_stock
         return (
-            self.session.query(func.sum(case_quantity_for_type_action))
-            .filter(StockTransaction.stock_id == stock_id)
-            .scalar()
+            (profit_loss / total_value_shares_stock) * 100
+            if total_value_shares_stock != 0
+            else 0
         )
