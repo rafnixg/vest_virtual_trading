@@ -1,19 +1,11 @@
 """Stock Transaction model."""
-from sqlalchemy import (
-    Column,
-    ForeignKey,
-    Integer,
-    Float,
-    String,
-    DateTime,
-    Enum,
-)
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql import func
+from datetime import datetime
 
 from db import Base
-
 from schemas.enums import TransactionType
+from sqlalchemy import (Column, DateTime, Enum, Float, ForeignKey, Integer,
+                        String)
+from sqlalchemy.orm import relationship
 
 
 class StockTransaction(Base):
@@ -26,7 +18,7 @@ class StockTransaction(Base):
     symbol = Column(String, index=True)
     price = Column(Float, index=True)
     transaction_type = Column(Enum(TransactionType))
-    create_date = Column(DateTime(timezone=True), server_default=func.now())
+    create_date = Column(DateTime, default=datetime.now())
 
     stock_id = Column(Integer, ForeignKey("stock.id"))
     stock = relationship("Stock", back_populates="stock_transactions")

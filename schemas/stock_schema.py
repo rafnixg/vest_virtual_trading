@@ -1,6 +1,8 @@
 """Stock Schema."""
 from datetime import datetime
+
 from pydantic import BaseModel
+
 from .enums import TransactionType
 
 
@@ -46,6 +48,7 @@ class StockHistoricSchemaBase(BaseModel):
 
     symbol: str
     price: float
+
 
 class StockHistoricSchemaInput(StockHistoricSchemaBase):
     """Schema for a historic input."""

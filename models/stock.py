@@ -1,12 +1,10 @@
 """Stock model."""
+from db import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
-
-from db import Base
-
-from models.stock_transacction import StockTransaction
 from models.stock_historic import StockHistoric
+from models.stock_transacction import StockTransaction
 
 
 class Stock(Base):

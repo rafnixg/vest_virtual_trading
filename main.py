@@ -1,11 +1,12 @@
 """Vest Virtual Trading"""
 from fastapi import FastAPI
 from fastapi_utils.tasks import repeat_every
-from repositories.stock_repository import StockRepository
+
+from db import Base, SessionMarkerFastAPI, engine
 from repositories.stock_historic_repository import StockHistoricRepository
-from schemas.stock_schema import StockHistoricSchemaInput
+from repositories.stock_repository import StockRepository
 from routers import stocks
-from db import Base, engine, SessionMarkerFastAPI
+from schemas.stock_schema import StockHistoricSchemaInput
 from services import NASDAQClient
 from utils import extrac_price
 

@@ -1,9 +1,9 @@
 """Stock historic model."""
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql import func
+from datetime import datetime
 
 from db import Base
+from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 
 
 class StockHistoric(Base):
@@ -13,7 +13,7 @@ class StockHistoric(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     symbol = Column(String, index=True)
-    datetime = Column(DateTime(timezone=True), server_default=func.now())
+    datetime = Column(DateTime, default=datetime.now())
     price = Column(Float, index=True)
 
     stock_id = Column(Integer, ForeignKey("stock.id"))
