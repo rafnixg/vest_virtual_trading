@@ -3,3 +3,4 @@ __pycache__
 .vscode
 sql_app.db
 db.sqlite
+test.db

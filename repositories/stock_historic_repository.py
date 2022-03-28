@@ -57,9 +57,13 @@ class StockHistoricRepository:
         stock_historics_prices = [
             stock_historic.price for stock_historic in stock_historics
         ]
-        price_min = min(stock_historics_prices) or 0
-        price_max = max(stock_historics_prices) or 0
-        price_avg = (sum(stock_historics_prices) / len(stock_historics_prices)) or 0
+        price_min = min(stock_historics_prices, default=0)
+        price_max = max(stock_historics_prices, default=0)
+        price_avg = (
+            (sum(stock_historics_prices) / len(stock_historics_prices))
+            if stock_historics_prices
+            else 0
+        )
 
         return {
             "lowest": f"${price_min:.2f}",
