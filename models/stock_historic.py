@@ -6,13 +6,13 @@ from sqlalchemy.sql import func
 from db import Base
 
 
-class StockHistory(Base):
+class StockHistoric(Base):
     """Stock historic model."""
 
-    __tablename__ = "stock_history"
+    __tablename__ = "stock_historic"
 
     id = Column(Integer, primary_key=True, index=True)
-    currency = Column(String, index=True)
+    symbol = Column(String, index=True)
     datetime = Column(DateTime(timezone=True), server_default=func.now())
     price = Column(Float, index=True)
 

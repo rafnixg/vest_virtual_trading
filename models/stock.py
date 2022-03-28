@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 from db import Base
 
 from models.stock_transacction import StockTransaction
-from models.stock_historic import StockHistory
+from models.stock_historic import StockHistoric
 
 
 class Stock(Base):
@@ -19,4 +19,4 @@ class Stock(Base):
     symbol = Column(String, unique=True, index=True)
 
     stock_transactions = relationship(StockTransaction, back_populates="stock")
-    stock_historics = relationship(StockHistory, back_populates="stock")
+    stock_historics = relationship(StockHistoric, back_populates="stock")
