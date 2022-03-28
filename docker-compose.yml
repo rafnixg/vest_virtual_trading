@@ -1,0 +1,15 @@
+version: "2"
+
+services:
+  website:
+    container_name: vest_virtual_trading
+    build: .
+    command: >
+      uvicorn
+      --host 0.0.0.0
+      --port 8000
+      "main:app"
+    volumes:
+      - ".:/app"
+    ports:
+      - "8000:8000"

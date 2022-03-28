@@ -4,16 +4,23 @@ Web service (API) that simulates a test environment for trade stocks where a use
 
 ## Tech Stack
 
-- Language: Python > 3.9.0
+- Language: Python3.8
 - Framework: FastAPI
-- Database: SQLite3, SQLAlchemy (ORM)
+- Database: SQLite3
+- Lib's: SQLAlchemy (ORM), fastapi_utils (Repeat Task), Pytest
 
 ## Endpoints
 - POST - /stock/trade
 - GET - /stock/hold
-- GET - /stock/historic
+- GET - /stock/historic/{symbol}
 
 ## Installation
+
+Cloning repository
+```bash
+$ git clone https://github.com/rafnixg/vest_virtual_trading.git
+$ cd vest_virtual_trading
+```
 
 Create virtual enviroment and install requirements.txt
 ```bash
@@ -24,7 +31,6 @@ $ source venv/bin/activate
 ```
 
 ## Usage
-
 Running with uvicorm server development(reload)
 ```bash
 $ source venv/bin/activate
@@ -39,7 +45,25 @@ Show API Docs
 [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ## Testing
-- TODO
+Running test
+```bash
+$ source venv/bin/activate
+(venv) $ pytest
+```
 
 ## With Docker
-- TODO
+Need to be installed Docker and Docker-compose for run
+```bash
+$ docker-compose build  # Build docker image
+$ docker-compose up     # Run docker container
+```
+
+For run docker container in background
+```bash
+$ docker-compose up  -d    # Run docker container
+```
+
+For Stop docker container
+```bash
+$ docker-compose stop     # Stop docker container
+```
