@@ -1,16 +1,16 @@
 """Router Stock for the API."""
 
-from db import get_db
+from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
+
+from db import get_db
+from services import NASDAQClient
 from repositories.stock_historic_repository import StockHistoricRepository
 from repositories.stock_repository import StockRepository
 from repositories.stock_transaction_repository import \
     StockTransactionRepository
 from schemas.stock_schema import (StockSchemaInput,
-                                  StockTransactionSchemaInput,
-                                  StockTransactionSchemaResponse)
-from services import NASDAQClient
-from sqlalchemy.orm import Session
+                                  StockTransactionSchemaInput)
 from utils import extrac_price
 
 router = APIRouter(prefix="/stock", tags=["Stock"])
@@ -24,6 +24,11 @@ nasdaq = NASDAQClient()
 async def stock_trade(
     stock_transaction: StockTransactionSchemaInput, db: Session = Depends(get_db)
 ):
+    """Trade a stock route [POST]
+    Args:
+        stock_transaction: The stock transaction to trade.
+        db: The database session.
+    """
     response = nasdaq.get_stock(stock_transaction.symbol)
     data = response["data"]
 
@@ -51,6 +56,10 @@ async def stock_trade(
 
 @router.get("/hold")
 async def stock_hold(db: str = Depends(get_db)):
+    """Get the stocks that the user is holding [GET]
+    Args:
+        db: The database session.
+    """
     transaction_repository = StockTransactionRepository(db)
     stock_repository = StockRepository(db)
     stock_historic_repository = StockHistoricRepository(db)
@@ -78,6 +87,11 @@ async def stock_hold(db: str = Depends(get_db)):
 
 @router.get("/historic/{symbol}")
 async def stock_historic(symbol: str, db: str = Depends(get_db)):
+    """Get the historic of a stock [GET]
+    Args:
+        symbol: The symbol of the stock.
+        db: The database session.
+    """
     stock_repository = StockRepository(db)
     stock_obj = stock_repository.get_by_symbol(symbol)
 

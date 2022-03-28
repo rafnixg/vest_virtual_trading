@@ -1,9 +1,10 @@
 """Stock transaction repository."""
+from sqlalchemy import case, func
+from sqlalchemy.orm import Session
+
 from models.stock import StockTransaction
 from schemas.enums import TransactionType
 from schemas.stock_schema import StockTransactionSchemaInput
-from sqlalchemy import case, func
-from sqlalchemy.orm import Session
 
 # CASE For Stock Transaction type multiplier factor
 case_quantity_for_type_action = case(

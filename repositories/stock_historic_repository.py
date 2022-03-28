@@ -1,10 +1,11 @@
 """Stock historic repository"""
-from datetime import date, datetime
+from datetime import date
+
+from sqlalchemy import func
+from sqlalchemy.orm import Session
 
 from models import StockHistoric
 from schemas.stock_schema import StockHistoricSchemaInput
-from sqlalchemy import func
-from sqlalchemy.orm import Session
 
 
 class StockHistoricRepository:

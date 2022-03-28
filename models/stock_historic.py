@@ -1,9 +1,10 @@
 """Stock historic model."""
 from datetime import datetime
 
-from db import Base
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
+from db import Base
 
 
 class StockHistoric(Base):

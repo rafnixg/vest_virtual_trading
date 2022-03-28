@@ -16,7 +16,6 @@ class StockSchemaBase(BaseModel):
 class StockSchemaInput(StockSchemaBase):
     """Stock Schema Input."""
 
-    pass
 
 
 class StockTransactionSchemaBase(BaseModel):
@@ -36,6 +35,7 @@ class StockTransactionSchemaResponse(StockTransactionSchemaBase):
     stock: str
 
     class Config:
+        """Config."""
         orm_mode = True
 
 
@@ -52,5 +52,3 @@ class StockHistoricSchemaBase(BaseModel):
 
 class StockHistoricSchemaInput(StockHistoricSchemaBase):
     """Schema for a historic input."""
-
-    pass

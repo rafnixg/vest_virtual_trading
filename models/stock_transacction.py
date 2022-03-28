@@ -1,11 +1,12 @@
 """Stock Transaction model."""
 from datetime import datetime
 
-from db import Base
-from schemas.enums import TransactionType
 from sqlalchemy import (Column, DateTime, Enum, Float, ForeignKey, Integer,
                         String)
 from sqlalchemy.orm import relationship
+
+from schemas.enums import TransactionType
+from db import Base
 
 
 class StockTransaction(Base):

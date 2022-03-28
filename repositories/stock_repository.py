@@ -1,7 +1,8 @@
 """Stock repository."""
+from sqlalchemy.orm import Session
+
 from models.stock import Stock
 from schemas.stock_schema import StockSchemaInput
-from sqlalchemy.orm import Session
 
 
 class StockRepository:

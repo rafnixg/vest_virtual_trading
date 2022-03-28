@@ -5,7 +5,7 @@ from fastapi_utils.tasks import repeat_every
 from db import Base, SessionMarkerFastAPI, engine
 from repositories.stock_historic_repository import StockHistoricRepository
 from repositories.stock_repository import StockRepository
-from routers import stocks
+from routers import stocks as stock_router
 from schemas.stock_schema import StockHistoricSchemaInput
 from services import NASDAQClient
 from utils import extrac_price
@@ -16,7 +16,7 @@ app = FastAPI(
     title="Vest Virtual Trading",
 )
 
-app.include_router(stocks.router)
+app.include_router(stock_router.router)
 nasdaq = NASDAQClient()
 
 
